@@ -1,0 +1,98 @@
+<html>
+<head>
+	<style>
+		table td {
+			border: 1px solid;
+		}
+	</style>
+	<script src='https://code.jquery.com/jquery-3.3.1.min.js' type='text/javascript'></script>
+</head>
+<body>
+	<div>
+		Manufacture type <br />
+		Weapons/Robe/Cloth<input type='radio' value='weapon' name='category' checked></input>
+		Other aromors<input type='radio' value='armor' name='category'></input>
+	</div>
+	<div>
+		Manufacture the following level equipments <br />
+		1<input type='checkbox' name='levels' value='1' checked></input>
+		2<input type='checkbox' name='levels' value='2'></input>
+		3<input type='checkbox' name='levels' value='3'></input>
+		4<input type='checkbox' name='levels' value='4'></input>
+		5<input type='checkbox' name='levels' value='5'></input>
+		6<input type='checkbox' name='levels' value='6'></input>
+		7<input type='checkbox' name='levels' value='7'></input>
+		8<input type='checkbox' name='levels' value='8'></input>
+		9<input type='checkbox' name='levels' value='9'></input>
+		10<input type='checkbox' name='levels' value='10'></input>
+	</div>
+	<table>
+		<tr>
+			<th>Level</th>
+			<th>Experience Required</th>
+		</tr>
+		<tr><td>1</td><td><input value='0'></input></td></tr>
+		<tr><td>2</td><td><input value='1800'></input></td></tr>
+		<tr><td>3</td><td><input value='7200'></input></td></tr>
+		<tr><td>4</td><td><input value='19800'></input></td></tr>
+		<tr><td>5</td><td><input value='45000'></input></td></tr>
+		<tr><td>6</td><td><input value='82800'></input></td></tr>
+		<tr><td>7</td><td><input value='133200'></input></td></tr>
+		<tr><td>8</td><td><input value='183600'></input></td></tr>
+		<tr><td>9</td><td><input value='246600'></input></td></tr>
+		<tr><td>10</td><td><input value='322200'></input></td></tr>
+	</table>
+	<button>Calculate</button>
+
+	<table id='result-detail'>
+		<tr class='th'><th>Level</th><th>Craft Item Level</th><th>Craft Num</th></tr>
+	</table>
+	<table id='result-total'>
+		<tr class='th'><th>Craft Item Level</th><th>Craft Num</th><th>Multiplier of 16</th></tr>
+	</table>
+
+	<script type='text/javascript'>
+		$('button').click(function() {
+			var current_exp = 0;
+			var exp_thresholds = [];
+			$('table td input').each(function() { exp_thresholds.push(parseInt($(this).val())); });
+			var craft_item_levels = [];
+			$('input[name="levels"]').each(function() { if ($(this).prop('checked')) craft_item_levels.push(parseInt($(this).val())); });
+			var output = [];
+			for (var i = 1; i < 10; i ++) {
+				var highest_craft_item_level = 1;
+				for (var j = 0; j < craft_item_levels.length; j ++)
+					if (craft_item_levels[j] < i)
+						highest_craft_item_level = craft_item_levels[j];
+
+				var base_exp = $('input[name="category"]:checked').val() == 'weapon' ? 240 : 180; 
+				var craft_num = (exp_thresholds[i] - exp_thresholds[i - 1]) / parseInt(base_exp / i * highest_craft_item_level);
+
+				output.push({level: highest_craft_item_level, num: craft_num});
+			}
+
+			$('#result-detail tr, #result-total tr').not('.th').remove();
+			var output_total = [];
+			for (var i = 0; i < output.length; i ++)
+			{
+				$('#result-detail').append($('<tr><td>' + (i + 1) + '</td><td>' + output[i].level + '</td><td>' + output[i].num + '</td></tr>'));
+
+				var found = false;
+				for (var j = 0; j < output_total.length; j ++)
+					if (output_total[j].level == output[i].level)
+					{
+						output_total[j].num += output[i].num;
+						found = true;
+					}
+				if (!found)
+					output_total.push({level: output[i].level, num: output[i].num});
+			}
+
+			for (var i = 0; i < output_total.length; i ++)
+				$('#result-total').append($('<tr><td>' + output_total[i].level + '</td><td>' + output_total[i].num + '</td><td>' + output_total[i].num / 16 + '</td></tr>'));
+
+			
+		});
+	</script>
+</body>
+</html>
