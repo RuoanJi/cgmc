@@ -25,7 +25,6 @@
 		7<input type='checkbox' name='levels' value='7'></input>
 		8<input type='checkbox' name='levels' value='8'></input>
 		9<input type='checkbox' name='levels' value='9'></input>
-		10<input type='checkbox' name='levels' value='10'></input>
 	</div>
 	<table>
 		<tr>
@@ -75,7 +74,7 @@
 			for (var i = 1; i < 10; i ++) {
 				var highest_craft_item_level = 1;
 				for (var j = 0; j < craft_item_levels.length; j ++)
-					if (craft_item_levels[j] < i)
+					if (craft_item_levels[j] <= i)
 						highest_craft_item_level = craft_item_levels[j];
 
 				var base_exp = $('input[name="category"]:checked').val() == 'weapon' ? 240 : 180; 
