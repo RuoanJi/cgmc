@@ -13,6 +13,7 @@
 		Weapons/Robe/Cloth<input type='radio' value='weapon' name='category' checked></input>
 		Other aromors<input type='radio' value='armor' name='category'></input>
 	</div>
+	Halve experience<input id='halve-experience' type='checkbox'></input>
 	<div>
 		Manufacture the following level equipments <br />
 		1<input type='checkbox' name='levels' value='1' checked></input>
@@ -52,6 +53,18 @@
 	</table>
 
 	<script type='text/javascript'>
+		$('#halve-experience').change(function() {
+			if ($(this).prop('checked')) {
+				$('table input').each(function() {
+					$(this).val(parseInt($(this).val()) / 2);
+				});
+			} else {
+				$('table input').each(function() {
+					$(this).val(parseInt($(this).val()) * 2);
+				});
+			}			
+		});
+
 		$('button').click(function() {
 			var current_exp = 0;
 			var exp_thresholds = [];
