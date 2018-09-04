@@ -10,8 +10,11 @@
 <body>
 	<div>
 		Manufacture type <br />
-		Weapons/Robe/Cloth<input type='radio' value='weapon' name='category' checked></input>
-		Other aromors<input type='radio' value='armor' name='category'></input>
+		Weapons/Robe/Cloth<input type='radio' value='240' name='category' checked></input>
+		Other armors<input type='radio' value='180' name='category'></input>
+		Potion/Cuisine<input type='radio' value='40' name='category'></input>
+		Armor repair/Appraise<input type='radio' value='60' name='category'></input>
+		Weapon repair<input type='radio' value='90' name='category'></input>
 	</div>
 	Halve experience<input id='halve-experience' type='checkbox'></input>
 	<div>
@@ -77,7 +80,7 @@
 					if (craft_item_levels[j] <= i)
 						highest_craft_item_level = craft_item_levels[j];
 
-				var base_exp = $('input[name="category"]:checked').val() == 'weapon' ? 240 : 180; 
+				var base_exp = parseInt($('input[name="category"]:checked').val()); 
 				var craft_num = (exp_thresholds[i] - exp_thresholds[i - 1]) / parseInt(base_exp / i * highest_craft_item_level);
 
 				output.push({level: highest_craft_item_level, num: craft_num});
