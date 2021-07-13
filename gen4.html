@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Gen4</title>
+</head>
+<body>
+<input type="text" id="token" onchange="calc()"/>
+<div id="info"></div>
+<script type="text/javascript">
+function calc() {
+	let info_string = '';
+	const personality = ['勤奋', '怕寂寞', '勇敢', '固执', '顽皮', '大胆', '坦率', '悠闲', '淘气', '乐天', '胆小', '急躁', '认真', '爽朗', '天真', '内敛', '慢吞吞', '冷静', '害羞', '马虎', '温和', '温顺', '自大', '慎重', '浮躁'];
+
+	let value = parseInt(document.getElementById('token').value);
+	info_string = info_string + value % 25 + ' ' + personality[value % 25];
+	let sex = value & 0xff;
+	info_string = info_string + '<br />' + sex + ' ' +  sex.toString(16);
+
+	document.getElementById('info').innerHTML = info_string;
+}
+</script>
+</body>
+</html>
