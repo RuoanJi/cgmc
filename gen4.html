@@ -14,7 +14,7 @@ function calc() {
 	info_string = info_string + value % 25 + ' ' + personality[value % 25];
 	let sex = value & 0xff;
 	info_string = info_string + '<br />' + sex + ' ' +  sex.toString(16);
-
+	info_string = info_string + '<br />特性' + (value % 2 == 0 ? 1 : 2);
 	document.getElementById('info').innerHTML = info_string;
 }
 </script>
